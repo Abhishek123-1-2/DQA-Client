@@ -1,0 +1,24 @@
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <div class="col-7">
+            <div class="animated-text">
+                <span id="text1" style="font-size: 42px;font-weight: 700;font-family: sans-serif;">Document <b style="color: #f7b524">Question</b> Answering</span>
+                <span id="text2" style="font-size: 42px;font-weight: 700;font-family: sans-serif;">DocGPT</span>
+                <br />
+                <button style="background-color: #f7b524;border-radius: 5px;padding-top: 9px;padding-bottom: 9px;padding-right: 12px;padding-left: 12px; color: white; border: 0px solid red;font-size: 17px;">Know More</button>
+            </div>
+        </div>
+        <div class="col-4 right">
+            <div class="login-box">
+                <form (ngSubmit)="onSubmit()">
+                    <select [(ngModel)]="role" name="role">
+                        <option value="" disabled selected>Select role</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                    </select>
+                    <button type="submit" style="background-color: #f7b524;">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
