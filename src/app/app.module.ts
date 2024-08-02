@@ -8,7 +8,7 @@ import { ProductPageComponent } from './product-page/product-page.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HttpClientModule } from '@angular/common/http';
-import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+// import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -23,8 +23,7 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgxExtendedPdfViewerModule
-   
+    // NgxExtendedPdfViewerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
