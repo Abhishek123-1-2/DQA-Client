@@ -1,0 +1,544 @@
+.left {
+    background: #58595b;
+    height: 95vh;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+  }
+  
+  .right {
+    background-color: #e9ecef;
+    height: 95vh;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+  }
+  
+  .form-select {
+    margin-top: 10px;
+    width: 100%;
+  }
+  
+  .custom-select,
+  .document-box {
+    margin-top: 9px;
+    width: 100%;
+    padding: 7px;
+    border: none;
+    background-color: transparent;
+    color: #000;
+    font-size: 13px;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%236a0dad' d='M2 0L0 2h4z'/%3E%3C/path fill='%236a0dad' d='M2 5L0 3h4z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+  }
+  
+  .custom-select:selected {
+    color: #f9b928;
+  }
+  
+  .custom-select:focus {
+    outline: none;
+  }
+  
+  .document-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    max-height: auto;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    height: 100vh;
+  }
+  
+  .document-box::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .button-container {
+    flex: 1 1 100%;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .btn {
+    width: 100%;
+    padding: 10px 20px;
+    border: none;
+    color: #fff;
+    font-size: 13px;
+    background-color: transparent;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .btn.selected {
+    color: #f9b928;
+    border: 2px solid #f9b928;
+  }
+  
+  .btn:hover {
+    background-color: #5d5b5e;
+    color: #fff;
+  }
+  
+  .button-container .btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 7px;
+    position: relative;
+  }
+  
+  .btn-text {
+    flex: 1 1 90%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  .count-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(to bottom right, #fff, #fff);
+    color: #000;
+    border-radius: 50%;
+    margin-left: 10px;
+    font-size: 0.8em;
+  }
+  
+  .button-container .btn:hover .count-circle {
+    background: #fff;
+    color: #5d5b5e;
+  }
+  
+  .button-container .btn.selected {
+    border: none;
+    background-color: transparent;
+    color: #f9b928;
+    font-weight: 700;
+  }
+  
+  .button-container .btn.selected .count-circle {
+    background: linear-gradient(to bottom right, #f9b928, #d09712);
+    color: #5d5b5e;
+  }
+  
+  .selected-bar {
+    display: flex;
+    gap: 10px;
+    padding: 5px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .selected-items {
+    flex-grow: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  
+  .selected-item {
+    background-color: #f9b928;
+    border-radius: 30px;
+    padding: 8px 13px;
+    color: #fff;
+    font-weight: 540;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .load-button,
+  .reset-button {
+    padding: 10px 7px;
+    border: none;
+    border-radius: 10%;
+    background-color: transparent;
+    color: grey;
+    font-weight: bold;
+    font-size: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    flex-shrink: 0;
+  }
+  
+  .load-button:hover,
+  .reset-button:hover {
+    color: #000;
+    font-weight: bold;
+  }
+  
+  .button-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+  }
+  
+  .alert-overlay {
+    z-index: 1050;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    text-align: center;
+    width: 30%;
+    margin: auto;
+  }
+  
+  .alert-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1040;
+  }
+  
+  .content-box {
+    background-color: #e9ecef;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 20px;
+    overflow: auto;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transform-origin: top;
+    height: 100%;
+    max-height: auto;
+  }
+  
+  .chat-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .chat-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .icon-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #5d5b5e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+  }
+  
+  .message-box {
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 70%;
+  }
+  
+  .bot-message-box {
+    max-width: 80%;
+  }
+  
+  .short-bot-message {
+    max-width: 50%;
+  }
+  
+  .user-message {
+    justify-content: flex-end;
+  }
+  
+  .user-message .message-box {
+    background-color: #d1e7dd;
+  }
+  
+  .bot-message {
+    justify-content: flex-start;
+  }
+  
+  .chat-input-container {
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    padding: 0px 9px;
+    margin-bottom: 4px;
+    position: relative;
+    margin-top: 12px;
+  }
+  
+  .btn-send {
+    background-color: transparent;
+    color: grey;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    font-size: 20px;
+    font-weight: 600;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .form-control {
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+    color: #5d5b5e;
+  }
+  
+  .btn-group {
+    top: 100%;
+    transform: translateY(-30%);
+    right: -40px;
+  }
+  
+  .btn-group {
+    margin-top: 5px;
+  }
+  
+  .btn-group .btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-right: 5px;
+    color: #5d5b5e;
+  }
+  
+  .btn-group .btn:hover {
+    color: #5d5b5e;
+  }
+  
+  .thinking {
+    opacity: 0.5;
+  }
+  
+  .typing {
+    opacity: 1;
+  }
+  
+  .bold-text {
+    font-weight: bold;
+  }
+  
+  .rate {
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+  }
+  
+  .rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+  }
+  
+  .rating>input {
+    display: none;
+  }
+  
+  .rating>label {
+    position: relative;
+    width: 1em;
+    font-size: 30px;
+    font-weight: 300;
+    color: #5d5b5e;
+    cursor: pointer;
+  }
+  
+  .rating>label::before {
+    content: "\2605";
+    position: absolute;
+    opacity: 0;
+  }
+  
+  .rating>label:hover:before,
+  .rating>label:hover~label:before {
+    opacity: 1 !important;
+  }
+  
+  .rating>input:checked~label:before {
+    opacity: 1;
+  }
+  
+  .rating:hover>input:checked~label:before {
+    opacity: 0.4;
+  }
+  
+  .buttons {
+    top: 36px;
+    position: relative;
+  }
+  
+  .rating-submit {
+    border-radius: 8px;
+    color: #5d5b5e;
+    height: auto;
+  }
+  
+  .rating-submit:hover {
+    color: #fff;
+  }
+  
+  .floating-action-button {
+    float: right;
+    right: 20px;
+    width: 55px;
+    position: relative;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    top: -5px;
+  }
+  
+  .floating-action-button button {
+    top: -5px;
+    background: none;
+    border: none;
+    display: block;
+    color: grey;
+    line-height: 50px;
+    cursor: pointer;
+    width: 120%;
+    height: 100%;
+  }
+  
+  .floating-action-button:hover {
+    color: #af7d0c !important;
+  }
+  
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+  
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .animated-hourglass {
+    animation: rotate 2s linear infinite;
+  }
+  
+  .resizable-sidebar {
+    transition: width 0.3s ease;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .resize-handle {
+    width: 5px;
+    height: 100%;
+    background-color: #ccc;
+    cursor: ew-resize;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  
+  .right {
+    transition: width 0.3s ease;
+  }
+  
+  .navbar .container-fluid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .navbar-toggler {
+    border: none;
+    background: none;
+    padding: 0;
+  }
+  
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%2854, 54, 54, 0.5%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  }
+  
+  .mc-logo {
+    margin-left: 8px;
+  }
+  
+  .floating-action-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .floating-action-button button {
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    cursor: pointer;
+    font-size: 21px;
+    color: grey;
+    transition: color 0.3s ease;
+  }
+  
+  .floating-action-button button:hover {
+    color: #af7d0c;
+  }
+  
+
+  /* Right Column where the PDF Viewer is placed */
+.right {
+    position: relative; /* Added for better control over internal components */
+    background-color: #f8f9fa; /* Light background for the viewer area */
+    padding: 10px; /* Padding around the viewer */
+    overflow: hidden; /* Hide overflow to prevent any unwanted scrollbars */
+    display: flex;
+    flex-direction: column;
+}
+
+/* PDF Viewer Specific Styling */
+ngx-extended-pdf-viewer {
+    flex-grow: 1; /* Allows the PDF viewer to take up all available space */
+    border: 1px solid #dee2e6; /* Subtle border around the PDF viewer */
+    border-radius: 5px; /* Rounded corners for the viewer */
+    overflow: auto; /* Enable scrollbars when necessary */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .left, .right {
+        flex: 1 1 100%;
+        width: 100%; /* Full width on smaller screens */
+    }
+    .navbar-toggler {
+        display: block; /* Ensure the toggle button is visible on small screens */
+    }
+    .floating-action-button {
+        display: flex; /* Keeps the action buttons inline */
+        justify-content: flex-end; /* Aligns buttons to the right */
+    }
+}

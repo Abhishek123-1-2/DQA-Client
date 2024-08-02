@@ -1,0 +1,68 @@
+/* Styles for the main container and content layout */
+body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif; /* Example font */
+}
+
+/* Ensures that the navbar has fixed positioning if it's not part of the router-outlet */
+nav {
+    width: 100%;
+    height: 60px; /* Adjust based on actual navbar height */
+    background-color: #333; /* Dark background for the navbar */
+    color: #fff;
+    line-height: 60px; /* Center text vertically */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+/* Style adjustments for main content when navbar is present */
+div.p-0 {
+    padding-top: 60px; /* Make room for the navbar */
+}
+
+/* Sidebar styles */
+app-sidebar {
+    position: fixed;
+    top: 60px; /* Below the navbar */
+    left: 0;
+    width: 250px; /* Adjust width as necessary */
+    height: calc(100% - 60px); /* Full height minus navbar */
+    background-color: #f0f0f0; /* Light background for the sidebar */
+    z-index: 500; /* Ensure it's above the page content but below the navbar */
+    overflow-y: auto; /* Allows scrolling */
+    border-right: 1px solid #ccc; /* Separates sidebar from content */
+}
+
+/* Styles for the content area next to the sidebar */
+div.col {
+    margin-left: 250px; /* Make room for the sidebar */
+    padding: 20px; /* Spacing around content */
+    min-height: calc(100vh - 60px); /* Full viewport height minus navbar */
+    background-color: #fff; /* Background color for the content area */
+    width: calc(100% - 250px); /* Rest of the horizontal space */
+}
+
+/* Style for the router-outlet container, ensuring it fills the available space */
+router-outlet {
+    display: block; /* Ensures it takes up space as a block-level element */
+    width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    app-sidebar {
+        width: 100%; /* Full width on smaller screens */
+        height: auto;
+        position: relative; /* Static positioning on small devices */
+    }
+    
+    div.col {
+        margin-left: 0; /* No sidebar margin on smaller screens */
+        width: 100%; /* Full width */
+    }
+}

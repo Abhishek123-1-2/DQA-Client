@@ -1,0 +1,215 @@
+<nav class="navbar navbar-light" style="background-color: white; border-bottom: 1px solid lightgrey; height: 60px; position: fixed; width: 100%;">
+    <div class="container-fluid">
+        <div class="d-flex align-items-center">
+            <button class="navbar-toggler" type="button" (click)="toggleSidebar()">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand ms-2" href="#">
+                <img style="width: 140px; height: 40px;" class="mc-logo" src="https://www.mindcraftamerica.com/images/MindCraft-Software-logo-text.svg" alt="">
+            </a>
+        </div>
+        <div class="floating-action-button">
+            <button (click)="home()">
+                <i class="bi bi-house" style="font-size: 21px;"></i>
+            </button>
+            <button (click)="logout()">
+                <i class="bi bi-power" style="font-size: 21px;"></i>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid h-100" style="margin-top: 56px; position: fixed;">
+    <div class="row h-100">
+        <!-- Resizable Sidebar -->
+        <div #resizableSidebar class="col-3 left resizable-sidebar" [style.width]="sidebarWidth">
+            <select class="form-select custom-select" aria-label="Default select example"
+                style="color: #000; background: #fff; border: none; font-weight: 600;" [(ngModel)]="selectedProductUin"
+                (change)="onProductChange(selectedProductUin)">
+                <option value="" selected disabled style="color: #000;">
+                    PRODUCT DOCUMENTS
+                </option>
+                <option *ngFor="let product of productsObjects" [value]="product.product_uin" style="color: #000;">
+                    {{ product.product_name }}
+                </option>
+            </select>
+
+            <div class="document-box" *ngIf="selectedProductUin != ''">
+                <div *ngFor="let product_detail of sortedProductDetails; let i = index" class="button-container">
+                    <button type="button" class="btn btn-primary d-flex justify-content-between align-items-center"
+                        [ngClass]="{'selected': selectedProductDetail.has(product_detail.product_detail)}"
+                        (click)="toggleProductDetail(product_detail)" [disabled]="buttonsDisabled">
+                        <span class="btn-text">
+                            {{ isSidebarCollapsed ? getAbbreviatedText(product_detail.product_detail) : product_detail.product_detail }}
+                        </span>
+                        <span class="count-circle"
+                            [ngClass]="{'selected': selectedProductDetail.has(product_detail.product_detail)}">
+                            {{ product_detail.count }}
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div #resizeHandle class="resize-handle"></div> <!-- Handle for resizing the sidebar -->
+        </div>
+
+        <div class="col-9 right" [style.width]="rightColumnWidth">
+              <!-- PDF Viewer -->
+            
+
+            <div class="selected-bar" *ngIf="selectedProductUin != '' && selectedProductDetail.size > 0">
+                <div class="selected-items">
+                    <div *ngFor="let detail of getSelectedProductDetails()" class="selected-item">
+                        {{ detail }}
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button class="load-button" (click)="loadProductDetails()" [disabled]="buttonsDisabled">
+                        <i class="bi bi-cloud-plus"></i>
+                    </button>
+                    <button class="reset-button" (click)="resetProductDetails()">
+                        <i class="bi bi-arrow-counterclockwise"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="content-box mt-3 flex-grow-1 d-flex flex-column" *ngIf="selectedProductUin != '' && viewChat">
+                <!-- Chat skeleton structure -->
+                <div class="chat-container flex-grow-1" #chatContainer>
+                    <div 
+                        *ngFor="let message of messages" 
+                        class="d-flex align-items-start"
+                        [ngClass]="{'user-message': message.type === 'user', 'bot-message': message.type === 'bot'}"
+                        [@messageAnimation]="message.animationState">
+                        <div class="icon-circle">
+                            <i [class]="message.type === 'user' ? 'bi bi-person' : (message.animationState === 'thinking' ? 'bi bi-hourglass-split animated-hourglass' : 'bi bi-robot')"></i>
+                        </div>
+                        <div 
+                            class="message-box ms-3 position-relative"
+                            [ngClass]="{'bot-message-box': message.type === 'bot', 'short-bot-message': message.type === 'bot' && message.text.length < 10}">
+                            <p class="mb-0">
+                                {{ message.text }}
+                            </p>
+                            <div 
+                                *ngIf="message.type === 'bot' && message.buttonsVisible"
+                                class="btn-group position-absolute end-0 me-2">
+                                <button 
+                                    type="button" 
+                                    class="btn btn-sm" 
+                                    (click)="showTime(message)">
+                                    <i class="bi bi-clock-history"></i>
+                                </button>
+                                <button 
+                                    type="button" 
+                                    class="btn btn-sm" 
+                                    (click)="infoMessage()" 
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#contextModal">
+                                    <i class="bi bi-info-circle"></i>
+                                </button>
+                                <button 
+                                    type="button" 
+                                    class="btn btn-sm" 
+                                    (click)="rateMessage(message)"
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#ratingModal">
+                                    <i class="bi bi-star"></i>
+                                </button>
+                                <button 
+                                    type="button" 
+                                    class="btn btn-sm" 
+                                    (click)="copyMessage(message.text)">
+                                    <i class="bi bi-clipboard"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- User query input fixed at the bottom -->
+                <div class="d-flex align-items-center chat-input-container">
+                    <div class="flex-grow-1 ms-2 me-2">
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            placeholder="Message DocGPT" 
+                            [(ngModel)]="userQuery"
+                            (keydown)="handleKeydown($event)" 
+                            [disabled]="isTyping" />
+                    </div>
+                    <button class="btn btn-send" (click)="sendMessage()" [disabled]="isTyping">
+                        <i class="bi bi-send"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="limitReached || loadSucess || messageCopied || messageTime" class="alert-backdrop">
+    </div>
+    <div *ngIf="limitReached" class="alert alert-warning alert-overlay" role="alert">
+        <i class="bi bi-exclamation-triangle"></i>
+        You can only select up to {{ selectionLimit }} items.
+    </div>
+    <div *ngIf="loadSucess" class="alert alert-success alert-overlay" role="alert">
+        <i class="bi bi-check-all"></i>
+        Loaded Successfully.
+    </div>
+    <div *ngIf="messageCopied" class="alert alert-success alert-overlay" role="alert">
+        <i class="bi bi-clipboard"></i>
+        Message Copied.
+    </div>
+    <div *ngIf="messageTime" class="alert alert-success alert-overlay" role="alert">
+        <i class="bi bi-clock-history"></i>
+        Total Time taken: {{ timeTaken }}
+    </div>
+</div>
+
+<!-- Context Modal -->
+<div class="modal fade" id="contextModal" tabindex="-1" aria-labelledby="contextModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="contextModalLabel">Relevant Context</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p *ngFor="let line of contextLines">
+                    {{ line }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Rate Modal -->
+<div class="modal fade" id="ratingModal" tabindex="-1" aria-labelledby="ratingModalLabel" aria-hidden="true"
+    #ratingModal>
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="ratingModalLabel">Rate Answer</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center">
+                    <div class="text-center mb-5">
+                        <div class="rating">
+                            <input type="radio" [(ngModel)]="rating" value="5" id="5">
+                            <label for="5">☆</label>
+                            <input type="radio" [(ngModel)]="rating" value="4" id="4">
+                            <label for="4">☆</label>
+                            <input type="radio" [(ngModel)]="rating" value="3" id="3">
+                            <label for="3">☆</label>
+                            <input type="radio" [(ngModel)]="rating" value="2" id="2">
+                            <label for="2">☆</label>
+                            <input type="radio" [(ngModel)]="rating" value="1" id="1">
+                            <label for="1">☆</label>
+                        </div>
+                        <div class="buttons mt-0">
+                            <button class="text-center btn btn-info px-4 py-1 rating-submit" (click)="storeData()"
+                                data-bs-dismiss="modal">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

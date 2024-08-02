@@ -1,0 +1,55 @@
+.sidebar-container {
+    position: fixed; /* Keeps the sidebar fixed during scroll */
+    top: 60px; /* Adjust based on your navbar height */
+    left: 0;
+    height: calc(100vh - 60px); /* Full height minus the navbar */
+    width: auto; /* Only as wide as the sidebar needs */
+    z-index: 1000; /* High z-index to keep it above other content */
+}
+
+.sidebar {
+    background-color: #58595b; /* Dark grey background */
+    width: 250px; /* Initial width of the sidebar */
+    height: 100%;
+    transition: width 0.3s ease;
+    overflow-x: hidden; /* Prevents horizontal scroll */
+}
+
+.sidebar.closed {
+    width: 0; /* When sidebar is toggled closed */
+}
+
+.form-select.custom-select {
+    width: 100%; /* Full width of the sidebar */
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.document-box {
+    max-height: calc(100vh - 140px);
+    overflow-y: auto; /* Allows scrolling within the document box */
+    padding: 10px;
+}
+
+.button-container {
+    margin-bottom: 10px;
+}
+
+.btn-primary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+}
+
+.resizer {
+    width: 5px;
+    background-color: #e9ecef;
+    cursor: ew-resize;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0; /* Positioned at the right edge of the sidebar */
+    z-index: 1050; /* Above other sidebar content */
+}

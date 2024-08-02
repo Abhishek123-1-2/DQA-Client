@@ -1,0 +1,24 @@
+<div class="sidebar-container">
+    <div class="sidebar" [class.closed]="isClosed" [ngStyle]="{'width.px': sidebarWidth}">
+        <select class="form-select custom-select" aria-label="Default select example"
+                [(ngModel)]="selectedProductUin" (change)="onProductChange(selectedProductUin)">
+            <option value="" selected disabled>PRODUCT DOCUMENTS</option>
+            <option *ngFor="let product of productsObjects" [value]="product.product_uin">
+                {{ product.product_name }}
+            </option>
+        </select>
+        <div class="document-box" *ngIf="selectedProductUin != ''">
+            <div *ngFor="let product_detail of sortedProductDetails; let i = index" class="button-container">
+                <button type="button" class="btn btn-primary d-flex justify-content-between align-items-center"
+                        [ngClass]="{'selected': selectedProductDetail.has(product_detail.product_detail)}"
+                        (click)="toggleProductDetail(product_detail.product_detail)" [disabled]="buttonsDisabled">
+                    <span class="btn-text">{{ product_detail.product_detail }}</span>
+                    <span class="count-circle" [ngClass]="{'selected': selectedProductDetail.has(product_detail.product_detail)}">
+                        {{ product_detail.count }}
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="resizer" (mousedown)="onMouseDown($event)"></div>
+    </div>
+</div>

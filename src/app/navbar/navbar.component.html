@@ -1,0 +1,21 @@
+<nav class="navbar navbar-light"
+    style="background-color: white; border-bottom:1px solid lightgrey; height: 60px; position: fixed; width: 100%;">
+    <div class="col-md-6 d-flex align-items-center">
+        <button class="toggle-btn-navbar" (click)="toggleSidebar()">
+            <i class="bi bi-list"></i>
+        </button>
+        <a class="navbar-brand" href="#"><img style="width: 140px; height:40px; position: relative; top: -5px"
+                class="mc-logo" src="https://www.mindcraftamerica.com/images/MindCraft-Software-logo-text.svg"
+                alt=""></a>
+    </div>
+    <div class="col-md-6" style="float: left;">
+        <div class="floating-action-button">
+            <button (click)="home()">
+                <i class="bi bi-house" style="font-size: 21px;"></i>
+            </button>
+            <button (click)="logout()">
+                <i class="bi bi-power" style="font-size: 21px;"></i>
+            </button>
+        </div>
+    </div>
+</nav>
